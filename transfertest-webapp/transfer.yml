@@ -1,0 +1,19 @@
+logging:
+    level: TRACE
+    loggers:
+       "org.hibernate.validator.internal.engine.constraintvalidation.ConstraintTree": DEBUG
+       
+ # Database settings.
+database:
+
+  # the name of your JDBC driver
+  driverClass: org.h2.Driver
+
+  # the username
+  user: sa
+
+  # the password
+  password: sa
+
+  # the JDBC URL
+  url: jdbc:h2:./target/transfer_h2_database

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.revolut.transfertest</groupId>
+	<artifactId>transfertest</artifactId>
+	<packaging>pom</packaging>
+	<version>1.0.0-SNAPSHOT</version>
+	<name>transfertest</name>
+
+	<modules>
+		<module>transfertest-client</module>
+		<module>transfertest-api</module>
+		<module>transfertest-dao</module>
+		<module>transfertest-service</module>
+		<module>transfertest-webapp</module>
+	</modules>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<junit.version>4.12</junit.version>
+		<easymock.version>3.4</easymock.version>
+		<hsqldb.version>2.3.2</hsqldb.version>
+		<dropwizard.version>1.1.3</dropwizard.version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>io.dropwizard</groupId>
+				<artifactId>dropwizard-bom</artifactId>
+				<version>${dropwizard.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<scope>test</scope>
+				<version>${junit.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.easymock</groupId>
+				<artifactId>easymock</artifactId>
+				<scope>test</scope>
+				<version>${easymock.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+</project>

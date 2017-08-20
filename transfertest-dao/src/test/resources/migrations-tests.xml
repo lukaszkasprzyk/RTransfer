@@ -1,0 +1,69 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+<!-- 	<changeSet id="droptables" author="lkasprzy" failOnError="false">
+		<sqlFile path="script/drop_tables.sql" encoding="UTF-8"
+			stripComments="true" />
+	</changeSet> -->
+	<changeSet id="create-database" author="lkasprzy">
+		<createTable tableName="users">
+			<column name="userid" type="bigint" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="name" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<createTable tableName="accounts">
+			<column name="accountid" type="bigint" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="accountnumber" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="currency" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="balance" type="number" defaultValue="0">
+				<constraints nullable="false" />
+			</column>
+			<column name="userid" type="bigint">
+				<constraints nullable="false" foreignKeyName="users.userid" />
+			</column>
+		</createTable>
+		<createTable tableName="transfers">
+			<column name="transactionid" type="bigint" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="sourceaccountnumber" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="targetaccountnumber" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="amount" type="number">
+				<constraints nullable="false" />
+			</column>
+			<column name="fxrate" type="number" defaultValue="0">
+				<constraints nullable="false" />
+			</column>
+			<column name="creatoruserid" type="bigint">
+				<constraints nullable="false" foreignKeyName="users.userid" />
+			</column>
+			<column name="currency" type="varchar(3)">
+				<constraints nullable="false" />
+			</column>
+			<column name="reference" type="varchar(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="status" type="varchar(255)" defaultValue="NEW">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet id="insert-values" author="lkasprzy">
+		<sqlFile path="script/update-test.sql" encoding="UTF-8"
+			stripComments="true" />
+	</changeSet>
+</databaseChangeLog>
