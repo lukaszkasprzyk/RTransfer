@@ -10,18 +10,22 @@ java 8, maven
 * How to build it?
 execute mvn clean install package.
 
-* How to start it?
-
-Go to transfertest-webapp directory
-ececute 
+* How to start application?
+Application could be started as standalone java program with follwing instruction:
+Go to transfertest-webapp directory and ececute 
 1. "java -jar target\transfertest-executable.jar db migrate config.yml" - it creates tables and example on embeded database
 2. "java -jar target\transfertest-executable.jar start config.yml" - starts server on localhost:8080
 Web application starts on http 8080 port with H2 database web manager on 8082.
+
+You can also download builed application as archive from  https://drive.google.com/file/d/0B8RyLSfr0PWda1E2Q2dPRnR5UDQ/view?usp=sharing
+and start it with command:  "java -jar transfertest-executable.jar start config.yml"
 ---
+It's possibility to test it with integration tests (TransferIntegrationTest), that are executed on real application as well, but it stats it's own application.
 
-
-TransferIntegrationTest contains some integration tests, that are able to start real server with h2 database in memory.
+TransferIntegrationTest contains some integration tests, that are able to start real server with h2 database in memory. 
+Those tests are independent with application started by user, but may have conflicts in http ports when running paralelly.
 Those tests are presenting basic functions of transfer API.
+
 
 * How to use it?
 To send transfer it requires to call two restfull services (POST, consumes and produces application/json)

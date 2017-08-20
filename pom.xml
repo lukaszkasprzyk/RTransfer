@@ -15,7 +15,6 @@
 		<module>transfertest-dao</module>
 		<module>transfertest-service</module>
 		<module>transfertest-webapp</module>
-		<module>transfertest-integrationtest</module>
 	</modules>
 
 	<properties>
