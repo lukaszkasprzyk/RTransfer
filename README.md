@@ -1,7 +1,6 @@
 RTransfer
 ==========
 *Application is using mainly dropwizard.io framework to build quick microservices.
-
 Additionally as an embedded database: h2, testing framework: junit with easymock.
 ---
 Requirements:
@@ -17,12 +16,14 @@ Go to transfertest-webapp directory
 ececute 
 1. "java -jar target\transfertest-executable.jar db migrate config.yml" - it creates tables and example on embeded database
 2. "java -jar target\transfertest-executable.jar start config.yml" - starts server on localhost:8080
-
 Web application starts on http 8080 port with H2 database web manager on 8082.
 ---
 How to use it?
 To send transfer it requires to call two restfull services (POST, consumes and produces application/json)
 1. transfer/create - responsible for pre validation (if source account balance is fine, source account belongs to specified user, target account exists), reply with transaction id strored on database with fxRate etc..
+
+TransferIntegrationTest contains some integration tests, that are able to start real server with h2 database in memory.
+Those tests are presenting basic functions of transfer API.
 
 takes request with body:
 {
@@ -34,7 +35,7 @@ takes request with body:
     "reference": "TITLE 1503261467"
 }
 
-reply with 
+reply with :
 {
     "transactionId": 1,
     "amount": 0.01,
@@ -75,5 +76,4 @@ reply with final transfer and source account balance
 }
 
 ---
-TransferIntegrationTest contains some integration tests, that are able to start real server with h2 database in memory.
-Those tests are presenting basic functions of transfer API.
+

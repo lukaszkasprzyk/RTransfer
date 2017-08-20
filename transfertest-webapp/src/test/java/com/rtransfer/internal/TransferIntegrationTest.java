@@ -61,7 +61,7 @@ public class TransferIntegrationTest {
 	}
 
 	@Test
-	public void createAndConfirmTransfer() throws Exception {
+	public void createAndConfirmTransferUser2toUser1() throws Exception {
 		Transfer transfer = new Transfer();
 		transfer.setSourceAccountNumber("MMM9876543211MMM9876543211");
 		transfer.setTargetAccountNumber("RRR1234567890RRR1234567890");
@@ -69,6 +69,31 @@ public class TransferIntegrationTest {
 		transfer.setReference("TITLE");
 		transfer.setAmount(BigDecimal.valueOf(0.11d));
 		transfer.setCreatorUserId(2l);
+
+		Entity<Transfer> trn = Entity.entity(transfer, MediaType.APPLICATION_JSON_TYPE);
+		final Transfer response = RULE.client().target(TRANSFER_URI_CREATE).request().post(trn)
+				.readEntity(Transfer.class);
+
+		assertNotNull(response);
+		assertEquals(transfer.getAmount(), response.getAmount());
+
+		TransferConfirm confirm = new TransferConfirm();
+		confirm.setTransactionId(response.getTransactionId());
+		final TransferStatus status = RULE.client().target(TRANSFER_URI_CONFIRM).request()
+				.post(Entity.entity(confirm, MediaType.APPLICATION_JSON_TYPE)).readEntity(TransferStatus.class);
+
+		assertNotNull(status);
+		assertEquals(status.getTransfer().getStatus(), "SUCCESS");
+	}
+	@Test
+	public void createAndConfirmTransferUser1toUser2() throws Exception {
+		Transfer transfer = new Transfer();
+		transfer.setSourceAccountNumber("RRR1234567890RRR1234567890");
+		transfer.setTargetAccountNumber("MMM9876543211MMM9876543211");
+		transfer.setCurrency("USD");
+		transfer.setReference("TITLE2");
+		transfer.setAmount(BigDecimal.valueOf(0.11d));
+		transfer.setCreatorUserId(1l);
 
 		Entity<Transfer> trn = Entity.entity(transfer, MediaType.APPLICATION_JSON_TYPE);
 		final Transfer response = RULE.client().target(TRANSFER_URI_CREATE).request().post(trn)
