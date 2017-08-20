@@ -1,4 +1,4 @@
-RTransfer
+# RTransfer
 ==========
 
 Application is using mainly dropwizard.io framework to build quick microservices. Read more at [dropwizard.io](http://www.dropwizard.io).
@@ -14,15 +14,22 @@ execute mvn clean install package.
 Application could be started as standalone java program with follwing instruction:
 Go to transfertest-webapp directory and ececute 
 
-	** "java -jar target\transfertest-executable.jar db migrate config.yml" - it creates tables and example on embeded database
+it creates tables and example on embeded database
+```
+	java -jar target\transfertest-executable.jar db migrate config.yml
 
-	** "java -jar target\transfertest-executable.jar start config.yml" - starts server on localhost:8080
+```
+starts server on localhost:8080
+```
+	java -jar target\transfertest-executable.jar start config.yml
 
+```
 Web application starts on http 8080 port with H2 database web manager on 8082.
 
 You can also download builed application as archive from  https://drive.google.com/file/d/0B8RyLSfr0PWda1E2Q2dPRnR5UDQ/view?usp=sharing
 and start it with command:  "java -jar transfertest-executable.jar start config.yml"
----
+
+
 Integration tests
 ==========
 It's possibility to test it with integration tests (TransferIntegrationTest), that are executed on real application as well, but it stats it's own application.
@@ -34,7 +41,10 @@ Those tests are presenting basic functions of transfer API.
 
 How to use it?
 To send transfer it requires to call two restfull services (POST, consumes and produces application/json)
-	** transfer/create - responsible for pre validation (if source account balance is fine, source account belongs to specified user, target account exists), reply with transaction id strored on database with fxRate etc..
+		
+	** transfer/create - responsible for pre validation 
+	(if source account balance is fine, source account belongs to specified user, target account exists),
+	 reply with transaction id strored on database with fxRate etc..
 
 
 		takes request with body:
