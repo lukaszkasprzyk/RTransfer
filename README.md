@@ -13,8 +13,11 @@ execute mvn clean install package.
 * How to start application?
 Application could be started as standalone java program with follwing instruction:
 Go to transfertest-webapp directory and ececute 
-** "java -jar target\transfertest-executable.jar db migrate config.yml" - it creates tables and example on embeded database
-** "java -jar target\transfertest-executable.jar start config.yml" - starts server on localhost:8080
+
+	** "java -jar target\transfertest-executable.jar db migrate config.yml" - it creates tables and example on embeded database
+
+	** "java -jar target\transfertest-executable.jar start config.yml" - starts server on localhost:8080
+
 Web application starts on http 8080 port with H2 database web manager on 8082.
 
 You can also download builed application as archive from  https://drive.google.com/file/d/0B8RyLSfr0PWda1E2Q2dPRnR5UDQ/view?usp=sharing
@@ -31,58 +34,58 @@ Those tests are presenting basic functions of transfer API.
 
 How to use it?
 To send transfer it requires to call two restfull services (POST, consumes and produces application/json)
-1. transfer/create - responsible for pre validation (if source account balance is fine, source account belongs to specified user, target account exists), reply with transaction id strored on database with fxRate etc..
+	** transfer/create - responsible for pre validation (if source account balance is fine, source account belongs to specified user, target account exists), reply with transaction id strored on database with fxRate etc..
 
 
-takes request with body:
-{
-    "amount": 0.01,
-    "sourceAccountNumber": "MMM9876543211MMM9876543211",
-    "targetAccountNumber": "RRR1234567890RRR1234567890",
-    "creatorUserId": 2,
-    "currency": "EUR",
-    "reference": "TITLE 1503261467"
-}
-
-reply with :
-{
-    "transactionId": 1,
-    "amount": 0.01,
-    "sourceAccountNumber": "MMM9876543211MMM9876543211",
-    "targetAccountNumber": "RRR1234567890RRR1234567890",
-    "creatorUserId": 2,
-    "fxRate": 3.33,
-    "reference": "TITLE 1503261467",
-    "status": "NEW",
-    "currency": "EUR"
-}
-2. transfer/confirm - that service is doing real money transfer from user account A to account B (including validation again)
-takes request with body:
-{
-	"transactionId": 1
-}
-
-reply with final transfer and source account balance
-{
-    "transfer": {
-        "transactionId": 2,
-        "amount": 0.01,
-        "sourceAccountNumber": "MMM9876543211MMM9876543211",
-        "targetAccountNumber": "RRR1234567890RRR1234567890",
-        "creatorUserId": 2,
-        "fxRate": 3.33,
-        "reference": "TITLE 1503262591",
-        "status": "SUCCESS",
-        "currency": "EUR"
-    },
-    "account": {
-        "accountId": 3,
-        "balance": 9.98,
-        "accountNumber": "MMM9876543211MMM9876543211",
-        "userid": 2,
-        "currency": "EUR"
-    }
-}
+		takes request with body:
+		{
+		    "amount": 0.01,
+		    "sourceAccountNumber": "MMM9876543211MMM9876543211",
+		    "targetAccountNumber": "RRR1234567890RRR1234567890",
+		    "creatorUserId": 2,
+		    "currency": "EUR",
+		    "reference": "TITLE 1503261467"
+		}
+		
+		reply with :
+		{
+		    "transactionId": 1,
+		    "amount": 0.01,
+		    "sourceAccountNumber": "MMM9876543211MMM9876543211",
+		    "targetAccountNumber": "RRR1234567890RRR1234567890",
+		    "creatorUserId": 2,
+		    "fxRate": 3.33,
+		    "reference": "TITLE 1503261467",
+		    "status": "NEW",
+		    "currency": "EUR"
+		}
+	** transfer/confirm - that service is doing real money transfer from user account A to account B (including validation again)
+		takes request with body:
+		{
+			"transactionId": 1
+		}
+		
+		reply with final transfer and source account balance
+		{
+		    "transfer": {
+		        "transactionId": 2,
+		        "amount": 0.01,
+		        "sourceAccountNumber": "MMM9876543211MMM9876543211",
+		        "targetAccountNumber": "RRR1234567890RRR1234567890",
+		        "creatorUserId": 2,
+		        "fxRate": 3.33,
+		        "reference": "TITLE 1503262591",
+		        "status": "SUCCESS",
+		        "currency": "EUR"
+		    },
+		    "account": {
+		        "accountId": 3,
+		        "balance": 9.98,
+		        "accountNumber": "MMM9876543211MMM9876543211",
+		        "userid": 2,
+		        "currency": "EUR"
+		    }
+		}
 
 ---
 
