@@ -12,7 +12,7 @@ execute mvn clean install package.
 
 * How to start application?
 Application could be started as standalone java program with follwing instruction:
-Go to transfertest-webapp directory and ececute 
+Go to transfertest-webapp directory and ececute following two commands
 
 it creates tables and example on embeded database
 ```
@@ -38,11 +38,13 @@ TransferIntegrationTest contains some integration tests, that are able to start 
 Those tests are independent with application started by user, but may have conflicts in http ports when running paralelly.
 Those tests are presenting basic functions of transfer API.
 
+API Description
+==========
 
 How to use it?
 To send transfer it requires to call two restfull services (POST, consumes and produces application/json)
 		
-	** transfer/create - responsible for pre validation 
+	** http://localhost:8080/transfer/create - responsible for pre validation 
 	(if source account balance is fine, source account belongs to specified user, target account exists),
 	 reply with transaction id strored on database with fxRate etc..
 
@@ -69,10 +71,10 @@ To send transfer it requires to call two restfull services (POST, consumes and p
 		    "status": "NEW",
 		    "currency": "EUR"
 		}
-	** transfer/confirm - that service is doing real money transfer from user account A to account B (including validation again)
+	** http://localhost:8080/transfer/confirm - that service is doing real money transfer from user account A to account B (including validation again)
 		takes request with body:
 		{
-			"transactionId": 1
+			"transactionId": 1 -id from reply object of create service from transactionId field
 		}
 		
 		reply with final transfer and source account balance
