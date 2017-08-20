@@ -17,3 +17,5 @@ database:
 
   # the JDBC URL
   url: jdbc:h2:./target/transfer_h2_database
+h2ConsoleWebStart: false
+h2ConsolePort: 8082

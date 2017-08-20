@@ -6,9 +6,19 @@
 		<artifactId>transfertest</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
-	<artifactId>transfertest-api</artifactId>
+	<artifactId>transfertest-integrationtest</artifactId>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.revolut.transfertest</groupId>
+			<artifactId>transfertest-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.revolut.transfertest</groupId>
+			<artifactId>transfertest-service</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>io.dropwizard</groupId>
 			<artifactId>dropwizard-core</artifactId>

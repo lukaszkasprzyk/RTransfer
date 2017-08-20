@@ -22,6 +22,7 @@ import org.junit.runner.RunWith;
 
 import com.rtransfer.api.Account;
 import com.rtransfer.api.Transfer;
+import com.rtransfer.api.TransferStatus;
 import com.rtransfer.api.exception.ValidationException;
 
 @RunWith(EasyMockRunner.class)
@@ -167,11 +168,11 @@ public class TransferServiceTest {
 		transferDAO.updateTransferStatus(TRNID, "SUCCESS");
 		expectLastCall();
 		expect(accountsDAO.listUserAccounts(transfer.getCreatorUserId())).andReturn(Arrays.asList(source));
-		accountsDAO.updateBalance(source.getAccountId(), BigDecimal.ZERO);
+		accountsDAO.increaseBalance(source.getAccountId(), transfer.getAmount().negate());
 		expectLastCall();
 
 		expect(accountsDAO.getAccountByNumber(transfer.getTargetAccountNumber())).andReturn(target);
-		accountsDAO.updateBalance(target.getAccountId(), target.getBalance().add(transfer.getAmount()));
+		accountsDAO.increaseBalance(target.getAccountId(), transfer.getAmount());
 		expectLastCall();
 		Transfer expectedTransfer = new Transfer();
 		expectedTransfer.setSourceAccountNumber("123");
@@ -181,13 +182,13 @@ public class TransferServiceTest {
 		expectedTransfer.setStatus("SUCCESS");
 
 		expect(transferDAO.getTransferById(TRNID)).andReturn(expectedTransfer);
-
+		expect(accountsDAO.getAccountByNumber(source.getAccountNumber())).andReturn(source);
 		replay(transferDAO, accountsDAO);
-		Transfer storedTransfer = service.process(TRNID);
+		TransferStatus storedTransfer = service.process(TRNID);
 
 		verify(accountsDAO, transferDAO);
 		assertNotNull(storedTransfer);
-		assertEquals(expectedTransfer.getStatus(), storedTransfer.getStatus());
+		assertEquals(expectedTransfer.getStatus(), storedTransfer.getTransfer().getStatus());
 
 	}
 	
@@ -229,13 +230,13 @@ public class TransferServiceTest {
 		expectedTransfer.setStatus("FAILED");
 
 		expect(transferDAO.getTransferById(TRNID)).andReturn(expectedTransfer);
-
+		expect(accountsDAO.getAccountByNumber(source.getAccountNumber())).andReturn(source);
 		replay(transferDAO, accountsDAO);
-		Transfer storedTransfer = service.process(TRNID);
+		TransferStatus storedTransfer = service.process(TRNID);
 
 		verify(accountsDAO, transferDAO);
 		assertNotNull(storedTransfer);
-		assertEquals(expectedTransfer.getStatus(), storedTransfer.getStatus());
+		assertEquals(expectedTransfer.getStatus(), storedTransfer.getTransfer().getStatus());
 
 	}
 

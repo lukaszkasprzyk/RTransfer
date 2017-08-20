@@ -10,6 +10,7 @@ import org.skife.jdbi.v2.sqlobject.Transaction;
 
 import com.rtransfer.api.Account;
 import com.rtransfer.api.Transfer;
+import com.rtransfer.api.TransferStatus;
 import com.rtransfer.api.exception.ErrorCode;
 import com.rtransfer.api.exception.ValidationException;
 
@@ -41,7 +42,7 @@ public class TransferService {
 	}
 
 	@Transaction
-	public Transfer process(BigInteger id) {
+	public TransferStatus process(BigInteger id) {
 		Transfer storedTransfer = transferDAO.getTransferById(id);
 		if (storedTransfer.getStatus().equals("NEW")) {
 			if (businessValidation(storedTransfer)) {
@@ -49,16 +50,19 @@ public class TransferService {
 				transferDAO.updateTransferStatus(storedTransfer.getTransactionId(), "SUCCESS");
 				Account accountToCharge = findSourceAccount(storedTransfer.getCreatorUserId(),
 						storedTransfer.getSourceAccountNumber()).get();
-				accountsDAO.updateBalance(accountToCharge.getAccountId(), storedTransfer.getAmount().negate());
+				accountsDAO.increaseBalance(accountToCharge.getAccountId(), storedTransfer.getAmount().negate());
 				Account accountToCredit = accountsDAO.getAccountByNumber(storedTransfer.getTargetAccountNumber());
-				accountsDAO.updateBalance(accountToCredit.getAccountId(), storedTransfer.getAmount());
+				accountsDAO.increaseBalance(accountToCredit.getAccountId(), storedTransfer.getAmount());
 			} else {
 				transferDAO.updateTransferStatus(storedTransfer.getTransactionId(), "FAILED");
 			}
 		} else {
 			throw new ValidationException(ErrorCode.ALREADY_PROCESSED);
 		}
-		return transferDAO.getTransferById(id);
+		TransferStatus status = new TransferStatus();
+		status.setTransfer(transferDAO.getTransferById(id));
+		status.setAccount(accountsDAO.getAccountByNumber(storedTransfer.getSourceAccountNumber()));
+		return status;
 	}
 
 	private boolean businessValidation(Transfer transfer) {

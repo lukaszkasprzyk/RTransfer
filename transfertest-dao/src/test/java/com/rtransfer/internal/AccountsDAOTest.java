@@ -35,7 +35,7 @@ public class AccountsDAOTest extends BaseDBTest {
 
 	@Test
 	public void updateBalance() {
-		accountsDAO.updateBalance(1l, BigDecimal.valueOf(133.0d));
+		accountsDAO.increaseBalance(1l, BigDecimal.valueOf(133.0d));
 		Account acc = accountsDAO.getAccountByNumber("RRR1234567890RRR1234567890");
 		assertNotNull(acc);
 		assertTrue(233.0d == acc.getBalance().doubleValue());

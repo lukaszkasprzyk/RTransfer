@@ -10,18 +10,8 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>com.revolut.transfertest</groupId>
 			<artifactId>transfertest-api</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.revolut.transfertest</groupId>
-			<artifactId>transfertest-dao</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

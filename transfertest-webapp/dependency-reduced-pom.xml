@@ -45,7 +45,7 @@
           <transformers>
             <transformer />
             <transformer>
-              <mainClass>com.rtransfer.internal.config.HelloWorldApplication</mainClass>
+              <mainClass>com.rtransfer.internal.config.TransferApplication</mainClass>
             </transformer>
           </transformers>
         </configuration>

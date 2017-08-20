@@ -18,7 +18,7 @@ public interface AccountsDAO {
 	static final String UPDATE_BALANCE = "update accounts set balance =balance+ :balance where accountid =:accountid";
 
 	@SqlUpdate(UPDATE_BALANCE)
-	void updateBalance(@Bind("accountid") long id, @Bind("balance") BigDecimal balance);
+	void increaseBalance(@Bind("accountid") long id, @Bind("balance") BigDecimal balance);
 
 	@SqlQuery(GET_USER_ACCOUNTS)
 	List<Account> listUserAccounts(@Bind("userid") long userid);

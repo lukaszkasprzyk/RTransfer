@@ -17,7 +17,7 @@ public class ValidationExceptionProvider implements ExceptionMapper<ValidationEx
 	public Response toResponse(ValidationException exception) {
 		Map<String, List<ErrorCode>> error = new HashMap<String, List<ErrorCode>>();
 		error.put("errors", Arrays.asList(exception.getErrorCode()));
-		Response response = Response.serverError().entity(error).build();
+		Response response = Response.serverError().status(200).entity(error).build();
 		return response;
 	}
 }
