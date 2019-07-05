@@ -1,4 +1,6 @@
 # RTransfer
+
+TESTED
 ==========
 
 Application is using mainly dropwizard.io framework to build quick microservices. Read more at [dropwizard.io](http://www.dropwizard.io).
